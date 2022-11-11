@@ -12,24 +12,29 @@ class _HomeScreenState extends State<HomeScreen> {
   final _cityTextController = TextEditingController();
   final _dataService = DataService();
 
+  //we used sharedpreference to show last typed city's name
+
+  //to save our city name as text using sharedperferences
   void saveText(String text) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("text", text);
   }
 
+  //to read the cityname saved in sharedperferences
   void readText() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedValue = prefs.getString("text");
     if (savedValue != null) {
       _cityTextController.text =
-          savedValue; //we used sharedpreference to show last typed city's name
+          savedValue;
     }
   }
+
 
   @override
   void initState() {
     super.initState();
-    readText();
+    readText(); //whenever our homepage launch this will initiate
   }
 
   WeatherResponse? _response;
@@ -67,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: SizedBox(
                     width: 150,
                     child: TextField(
-                        onChanged: (val) {
+                        onChanged: (val) {  //as soon as our value get changed this function will be triggered
                           saveText(val);
                         },
                         controller: _cityTextController,
